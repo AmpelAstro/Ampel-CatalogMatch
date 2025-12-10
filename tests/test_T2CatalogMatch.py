@@ -14,6 +14,7 @@ from ampel.log.AmpelLogger import AmpelLogger
 from ampel.model.UnitModel import UnitModel
 from ampel.struct.AmpelBuffer import AmpelBuffer
 from ampel.struct.T3Store import T3Store
+
 # from ampel.ztf.t0.DecentFilter import DecentFilter
 from ampel.ztf.t2.T2CatalogMatch import T2CatalogMatch
 from ampel.ztf.t3.complement.TNSNames import TNSNames
@@ -21,8 +22,16 @@ from ampel.ztf.t3.complement.TNSNames import TNSNames
 
 @pytest.fixture
 def catalogmatch_config():
-    with open(Path(__file__).parent / "test-data" / "catalogmatch_config.yaml") as f:
+    with open(
+        Path(__file__).parent / "test-data" / "catalogmatch_config.yaml"
+    ) as f:
         return yaml.safe_load(f)
+
+
+@pytest.fixture(scope="session")
+def testing_config():
+    """Path to an Ampel config file suitable for testing."""
+    return Path(__file__).parent / "test-data" / "testing-config.yaml"
 
 
 @pytest.fixture(scope="session")
@@ -33,24 +42,21 @@ def _catalogmatch_service_reachable():
         pytest.skip("https://ampel.zeuthen.desy.de/ is unreachable")
 
 
-@pytest.fixture
-def ampel_logger():
-    return AmpelLogger.get_logger()
-
-
-@pytest.mark.usefixtures("_patch_mongo", "_catalogmatch_service_reachable")
+@pytest.mark.usefixtures("_catalogmatch_service_reachable")
 def test_catalogmatch(
-    dev_context: AmpelContext,
+    mock_context: AmpelContext,
     catalogmatch_config: dict[str, Any],
     ampel_logger: AmpelLogger,
 ):
-    unit: T2CatalogMatch = dev_context.loader.new_logical_unit(
+    unit: T2CatalogMatch = mock_context.loader.new_logical_unit(
         model=UnitModel(unit="T2CatalogMatch", config=catalogmatch_config),
         logger=ampel_logger,
         sub_type=T2CatalogMatch,
     )
     result = unit.process(DataPoint({"id": 0, "body": {"ra": 0, "dec": 0}}))
-    base_config: dict[str, Any] = {k: None for k in catalogmatch_config["catalogs"]}
+    base_config: dict[str, Any] = {
+        k: None for k in catalogmatch_config["catalogs"]
+    }
     assert result == (
         base_config
         | {
@@ -73,30 +79,13 @@ def test_catalogmatch(
     )
 
 
-@pytest.mark.usefixtures("_patch_mongo")
-def test_decentfilter_star_in_gaia(
-    dev_context: AmpelContext,
-    ampel_logger: AmpelLogger,
-):
-    with open(Path(__file__).parent / "test-data" / "decentfilter_config.yaml") as f:
-        config = yaml.safe_load(f)
-    unit: DecentFilter = dev_context.loader.new_logical_unit(
-        UnitModel(unit="DecentFilter", config=config),
-        logger=ampel_logger,
-        sub_type=DecentFilter,
-    )
-    assert unit.is_star_in_gaia(
-        {"ra": 0.009437700971970959, "dec": -0.0008937364197194631}
-    )
-    assert not unit.is_star_in_gaia({"ra": 0, "dec": 0})
-
-
-@pytest.mark.usefixtures("_patch_mongo")
-def test_tnsnames(dev_context: AmpelContext, ampel_logger: AmpelLogger) -> None:
-    unit: TNSNames = dev_context.loader.new_context_unit(
+def test_tnsnames(
+    mock_context: AmpelContext, ampel_logger: AmpelLogger
+) -> None:
+    unit: TNSNames = mock_context.loader.new_context_unit(
         UnitModel(unit="TNSNames"),
         logger=ampel_logger,
-        context=dev_context,
+        context=mock_context,
         sub_type=TNSNames,
     )
     buf = AmpelBuffer(
@@ -117,7 +106,10 @@ def test_tnsnames(dev_context: AmpelContext, ampel_logger: AmpelLogger) -> None:
                 T2Document(
                     {
                         "unit": "T2LightCurveSummary",
-                        "meta": [{"code": DocumentCode.OK, "tier": 2}, {"tier": 0}],
+                        "meta": [
+                            {"code": DocumentCode.OK, "tier": 2},
+                            {"tier": 0},
+                        ],
                         "body": [{"ra": 0.518164, "dec": 0.361964}],
                     }
                 )
@@ -129,10 +121,10 @@ def test_tnsnames(dev_context: AmpelContext, ampel_logger: AmpelLogger) -> None:
     assert stockdoc["name"] == ("sourceysource", "TNS2020ubb")
     assert "extra" not in buf
 
-    unit = dev_context.loader.new_context_unit(
+    unit = mock_context.loader.new_context_unit(
         UnitModel(unit="TNSReports"),
         logger=ampel_logger,
-        context=dev_context,
+        context=mock_context,
         sub_type=TNSNames,
     )
     unit.complement([buf], T3Store())

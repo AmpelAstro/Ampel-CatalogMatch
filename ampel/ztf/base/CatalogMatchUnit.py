@@ -170,12 +170,12 @@ class CatalogMatchUnit(CatalogMatchUnitBase, LogicalUnit):
     Catalog matching for LogicalUnits
     """
 
-    require = ("ampel-ztf/catalogmatch",)
+    require = ("ampel-catalogmatch/url",)
 
     @cached_property
     def session(self) -> BaseUrlSession:
         assert self.resource is not None
-        return BaseUrlSession(base_url=self.resource["ampel-ztf/catalogmatch"])
+        return BaseUrlSession(base_url=self.resource["ampel-catalogmatch/url"])
 
 
 class CatalogMatchContextUnit(CatalogMatchUnitBase, ContextUnit):
@@ -187,6 +187,6 @@ class CatalogMatchContextUnit(CatalogMatchUnitBase, ContextUnit):
     def session(self) -> BaseUrlSession:
         return BaseUrlSession(
             base_url=self.context.config.get(
-                "resource.ampel-ztf/catalogmatch", str, raise_exc=True
+                "resource.ampel-catalogmatch/url", str, raise_exc=True
             )
         )

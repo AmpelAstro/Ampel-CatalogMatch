@@ -43,6 +43,7 @@ ampel-interface = {version = ">=0.10.4.post2,<0.11"}
 requests = "^2.32.5"
 backoff = "^2.2.1"
 requests-toolbelt = "^1.0.0"
+ampel-alerts = "^0.10.3a6"
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "setuptools >= 40.6.0", "wheel"]
