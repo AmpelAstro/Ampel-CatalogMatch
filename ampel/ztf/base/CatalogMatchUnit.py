@@ -17,7 +17,9 @@ from typing import (
 
 import backoff
 import requests
-from requests_toolbelt.sessions import BaseUrlSession
+from requests_toolbelt.sessions import (  # type: ignore[import-untyped]
+    BaseUrlSession,
+)
 
 from ampel.base.LogicalUnit import LogicalUnit
 from ampel.core.ContextUnit import ContextUnit
