@@ -29,12 +29,6 @@ def catalogmatch_config():
 
 
 @pytest.fixture(scope="session")
-def testing_config():
-    """Path to an Ampel config file suitable for testing."""
-    return Path(__file__).parent / "test-data" / "testing-config.yaml"
-
-
-@pytest.fixture(scope="session")
 def _catalogmatch_service_reachable():
     try:
         requests.head("https://ampel.zeuthen.desy.de/", timeout=0.5)

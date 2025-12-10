@@ -890,14 +890,14 @@ dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "requests
 
 [[package]]
 name = "pytest-ampel-core"
-version = "0.10.0a3"
+version = "0.10.0a4"
 description = "A plugin to provide AmpelContext fixtures in pytest"
 optional = false
 python-versions = "<4,>=3.10"
 groups = ["dev"]
 files = [
-    {file = "pytest_ampel_core-0.10.0a3-py3-none-any.whl", hash = "sha256:c08d124e68d9c6c9b810842dc2f78ddfb613f23f878a5e6315f33163af7f708f"},
-    {file = "pytest_ampel_core-0.10.0a3.tar.gz", hash = "sha256:d7ffd2466da4a7ced6a64551f3d99f1314d2f5a27a04b04cd14ad105355adede"},
+    {file = "pytest_ampel_core-0.10.0a4-py3-none-any.whl", hash = "sha256:529f2a150a974a3f801fc1e101ac4520a61cb69e3c916a1a91580108749436bc"},
+    {file = "pytest_ampel_core-0.10.0a4.tar.gz", hash = "sha256:478f323f18e8aa78a021d5ebc56a042775ff930db4007f923354411295370b69"},
 ]
 
 [package.dependencies]
