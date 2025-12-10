@@ -14,7 +14,7 @@ from ampel.log.AmpelLogger import AmpelLogger
 from ampel.model.UnitModel import UnitModel
 from ampel.struct.AmpelBuffer import AmpelBuffer
 from ampel.struct.T3Store import T3Store
-from ampel.ztf.t0.DecentFilter import DecentFilter
+# from ampel.ztf.t0.DecentFilter import DecentFilter
 from ampel.ztf.t2.T2CatalogMatch import T2CatalogMatch
 from ampel.ztf.t3.complement.TNSNames import TNSNames
 
