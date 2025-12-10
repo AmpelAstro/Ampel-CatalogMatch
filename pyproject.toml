@@ -4,10 +4,10 @@ version = "0.10.0a0"
 description = ""
 requires-python = ">=3.11, <4"
 authors = [
-    { name = "", email = "" },
+    { name = "Jakob van Santen", email = "jakob.van.santen@desy.de" },
 ]
 maintainers = [
-    { name = "", email = "" },
+    { name = "Jakob van Santen", email = "jakob.van.santen@desy.de" },
 ]
 license = "BSD-3-Clause"
 readme = "README.md"
