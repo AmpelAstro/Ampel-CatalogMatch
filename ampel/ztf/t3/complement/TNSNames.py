@@ -26,10 +26,12 @@ class TNSNames(CatalogMatchContextUnit, AbsBufferComplement):
     search_radius: float = 3.0
     include_report: bool = False
 
-    def complement(self, records: Iterable[AmpelBuffer], t3s: T3Store) -> None:
+    def complement(self, records: Iterable[AmpelBuffer], t3s: T3Store) -> None:  # noqa: ARG002
         for record in records:
             # find the latest T2LightCurveSummary result
-            if (summary := self._get_t2_result(record, "T2LightCurveSummary")) is None:
+            if (
+                summary := self._get_t2_result(record, "T2LightCurveSummary")
+            ) is None:
                 raise ValueError(
                     f"No T2LightCurveSummary found for stock {record['id']!s}"
                 )
@@ -61,12 +63,15 @@ class TNSNames(CatalogMatchContextUnit, AbsBufferComplement):
 
             if (stock := record.get("stock", None)) is not None:
                 existing_names = (
-                    tuple(name) if (name := stock.get("name")) is not None else tuple()
+                    tuple(name)
+                    if (name := stock.get("name")) is not None
+                    else tuple()
                 )
                 new_names = tuple(
                     n
                     for item in matches
-                    if (n := "TNS" + item["body"]["objname"]) not in existing_names
+                    if (n := "TNS" + item["body"]["objname"])
+                    not in existing_names
                 )
                 dict.__setitem__(stock, "name", existing_names + new_names)  # type: ignore[index]
 
@@ -84,7 +89,9 @@ class TNSNames(CatalogMatchContextUnit, AbsBufferComplement):
         Get the result of the latest invocation of the given unit
         """
         if (t2_documents := record.get("t2")) is None:
-            raise ValueError(f"{type(self).__name__} requires T2 records be loaded")
+            raise ValueError(
+                f"{type(self).__name__} requires T2 records be loaded"
+            )
         for t2_doc in reversed(t2_documents):
             if t2_doc["unit"] == unit_id and (body := t2_doc.get("body")):
                 for meta, result in zip(
