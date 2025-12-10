@@ -1,6 +1,6 @@
 build:
   date: 10/12/2025
-  time: '16:42:29'
+  time: '17:32:05'
   by: jakob
   conda: base
   stop_on_errors: 2
@@ -13,8 +13,8 @@ build:
   ignore_processes: false
   ampel-interface: 0.10.5a8
   ampel-core: 0.10.6a18
+  ampel-alerts: 0.10.3
   ampel-catalogmatch: 0.10.0a0
-  ampel-alerts: 0.10.3a6
 mongo:
   ingest:
     stock: MongoStockIngester
@@ -185,7 +185,7 @@ unit:
     - AmpelBaseModel
     xxh64: 8872217729468029895
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/AlertConsumer.py
   DemoProcessor:
     fqn: ampel.demo.DemoProcessor
@@ -282,7 +282,7 @@ unit:
     - ContextUnit
     xxh64: 7225454230032925849
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/reject/FullActiveAlertRegister.py
   FullAlertRegister:
     fqn: ampel.alert.reject.FullAlertRegister
@@ -294,7 +294,7 @@ unit:
     - ContextUnit
     xxh64: 619168808762382240
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/reject/FullAlertRegister.py
   GeneralActiveAlertRegister:
     fqn: ampel.alert.reject.GeneralActiveAlertRegister
@@ -307,7 +307,7 @@ unit:
     - ContextUnit
     xxh64: 15701361168250658864
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/reject/GeneralActiveAlertRegister.py
   GeneralAlertRegister:
     fqn: ampel.alert.reject.GeneralAlertRegister
@@ -319,7 +319,7 @@ unit:
     - ContextUnit
     xxh64: 14918869499624522910
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/reject/GeneralAlertRegister.py
   MinimalActiveAlertRegister:
     fqn: ampel.alert.reject.MinimalActiveAlertRegister
@@ -332,7 +332,7 @@ unit:
     - ContextUnit
     xxh64: 16236272495007481506
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/reject/MinimalActiveAlertRegister.py
   MinimalAlertRegister:
     fqn: ampel.alert.reject.MinimalAlertRegister
@@ -344,7 +344,7 @@ unit:
     - ContextUnit
     xxh64: 17607750226609211405
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/reject/MinimalAlertRegister.py
   MongoIngester:
     fqn: ampel.mongo.update.MongoIngester
@@ -605,7 +605,7 @@ unit:
     - CatalogMatchUnitBase
     - AbsBufferComplement
     - ContextUnit
-    xxh64: 12997880005649914244
+    xxh64: 8273987352000172206
     distrib: ampel-catalogmatch
     version: 0.10.0a0
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/ampel/ztf/t3/complement/TNSNames.py
@@ -630,7 +630,7 @@ unit:
     - LogicalUnit
     xxh64: 4487991822848981023
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/filter/BasicMultiFilter.py
   CatalogMatchFilter:
     fqn: ampel.ztf.base.CatalogMatchFilter
@@ -640,7 +640,7 @@ unit:
     - CatalogMatchUnitBase
     - AbsAlertFilter
     - LogicalUnit
-    xxh64: 12448880686963738953
+    xxh64: 6995747838564730755
     distrib: ampel-catalogmatch
     version: 0.10.0a0
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/ampel/ztf/base/CatalogMatchFilter.py
@@ -650,7 +650,7 @@ unit:
     - CatalogMatchUnit
     - CatalogMatchUnitBase
     - LogicalUnit
-    xxh64: 2486925363214761211
+    xxh64: 12697788911956894392
     distrib: ampel-catalogmatch
     version: 0.10.0a0
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/ampel/ztf/base/CatalogMatchUnit.py
@@ -742,7 +742,7 @@ unit:
     - CatalogMatchUnitBase
     - AbsPointT2Unit
     - LogicalUnit
-    xxh64: 15334074273244056791
+    xxh64: 516278120132254943
     distrib: ampel-catalogmatch
     version: 0.10.0a0
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/ampel/ztf/t2/T2CatalogMatch.py
@@ -1070,7 +1070,7 @@ unit:
     - AbsContextManager
     xxh64: 16923665551712057840
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/FilteringAlertSupplier.py
   DirAlertLoader:
     fqn: ampel.alert.load.DirAlertLoader
@@ -1080,7 +1080,7 @@ unit:
     - AbsContextManager
     xxh64: 10171942137351062083
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/load/DirAlertLoader.py
   DirFileNamesLoader:
     fqn: ampel.alert.load.DirFileNamesLoader
@@ -1090,7 +1090,7 @@ unit:
     - AbsContextManager
     xxh64: 8599448184043280499
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/load/DirFileNamesLoader.py
   DirTaggedAlertLoader:
     fqn: ampel.alert.load.DirTaggedAlertLoader
@@ -1101,7 +1101,7 @@ unit:
     - AbsContextManager
     xxh64: 9278748089013175870
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/load/DirTaggedAlertLoader.py
   FileAlertLoader:
     fqn: ampel.alert.load.FileAlertLoader
@@ -1111,7 +1111,7 @@ unit:
     - AbsContextManager
     xxh64: 11924022877541862841
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/load/FileAlertLoader.py
   TarAlertLoader:
     fqn: ampel.alert.load.TarAlertLoader
@@ -1121,7 +1121,7 @@ unit:
     - AbsContextManager
     xxh64: 8928970892179404415
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/alert/load/TarAlertLoader.py
   UnitTestAlertSupplier:
     fqn: ampel.dev.UnitTestAlertSupplier
@@ -1131,7 +1131,7 @@ unit:
     - AbsContextManager
     xxh64: 13729016972229493520
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/dev/UnitTestAlertSupplier.py
   EasyAlertConsumerTemplate:
     fqn: ampel.template.EasyAlertConsumerTemplate
@@ -1141,7 +1141,7 @@ unit:
     - AmpelBaseModel
     xxh64: 13512684806126266059
     distrib: ampel-alerts
-    version: 0.10.3a6
+    version: 0.10.3
     source: /Users/jakob/Documents/ZTF/Ampel-v0.8.3/Ampel-CatalogMatch/.venv/lib/python3.12/site-packages/ampel/template/EasyAlertConsumerTemplate.py
 process:
   t0: {}
