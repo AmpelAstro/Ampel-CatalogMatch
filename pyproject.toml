@@ -1,6 +1,6 @@
 [project]
 name = "ampel-catalogmatch"
-version = "0.10.0a1"
+version = "0.10.0a2"
 description = "Astronomical catalog matching for Ampel"
 requires-python = ">=3.11, <4"
 authors = [
