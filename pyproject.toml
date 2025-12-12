@@ -1,7 +1,7 @@
 [project]
 name = "ampel-catalogmatch"
 version = "0.10.0a1"
-description = ""
+description = "Astronomical catalog matching for Ampel"
 requires-python = ">=3.11, <4"
 authors = [
     { name = "Jakob van Santen", email = "jakob.van.santen@desy.de" },
@@ -11,13 +11,13 @@ maintainers = [
 ]
 license = "BSD-3-Clause"
 readme = "README.md"
-homepage = "https://ampelproject.github.io"
-repository = "https://github.com/AmpelAstro/Ampel-CatalogMatch"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Scientific/Engineering :: Astronomy",
     "Typing :: Typed",
@@ -39,25 +39,20 @@ dev = [
 
 [tool.poetry]
 packages = [
-    {include = "ampel"}
+    {include = "ampel"},
+    {include = "conf/**/*.yml"}
 ]
-exclude = [
-    "ampel/py.typed",
-]
-include = [
-    'conf/*/*.json',
-    'conf/*/*/*.json',
-    'conf/*/*.yaml',
-    'conf/*/*/*.yaml',
-    'conf/*/*.yml',
-    'conf/*/*/*.yml',
-]
+
+[project.urls]
+homepage = "https://ampelproject.github.io"
+repository = "https://github.com/AmpelAstro/Ampel-CatalogMatch"
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "setuptools >= 40.6.0", "wheel"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
+minversion = "6.0"
 addopts = "--showlocals -ra"
 filterwarnings = [
     "error",
@@ -73,6 +68,7 @@ plugins = [
   "pydantic.mypy",
 ]
 show_error_codes = true
+warn_unused_ignores = true
 check_untyped_defs = true
 
 [[tool.mypy.overrides]]
@@ -82,7 +78,7 @@ module = [
 ignore_missing_imports = true
 
 [tool.ruff]
-line-length = 79
+line-length = 88
 target-version = "py312"
 
 [tool.ruff.lint]
@@ -115,7 +111,11 @@ ignore = [
 known-first-party = ["ampel"]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["RUF018", "SLF001"]
+"tests/*" = [
+    "RUF018",  # assignment in assert is just fine in tests
+    "SLF001",  # allow private member access
+    "T201",    # allow print()
+]
 
 [tool.ruff.lint.flake8-unused-arguments]
 ignore-variadic-names = true
