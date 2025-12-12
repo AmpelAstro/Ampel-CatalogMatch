@@ -40,7 +40,7 @@ dev = [
 [tool.poetry]
 packages = [
     {include = "ampel"},
-    {include = "conf/**/*.yml"}
+    {include = "ampel/conf/**/*.yml"},
 ]
 
 [project.urls]
