@@ -135,9 +135,7 @@ class CatalogMatchUnitBase:
         ra: float,
         dec: float,
         catalogs: Sequence[ConeSearchRequest],
-    ) -> (
-        list[bool] | list[None | CatalogItem] | list[None | list[CatalogItem]]
-    ):
+    ) -> list[bool] | list[None | CatalogItem] | list[None | list[CatalogItem]]:
         if not -90 <= dec <= 90:
             raise ValueError(
                 "Declination angle must be within -90 deg <= angle <= 90 deg, got {dec} deg"

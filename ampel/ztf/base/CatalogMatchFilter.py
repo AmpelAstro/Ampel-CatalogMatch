@@ -68,10 +68,7 @@ class CatalogMatchFilter(CatalogMatchUnit, AbsAlertFilter):
                 self.cone_search_any(
                     ra,
                     dec,
-                    [
-                        cast(ConeSearchRequest, r.dict())
-                        for r in selection.all_of
-                    ],
+                    [cast(ConeSearchRequest, r.dict()) for r in selection.all_of],
                 )
             )
         if isinstance(selection, AnyOf):
@@ -85,10 +82,7 @@ class CatalogMatchFilter(CatalogMatchUnit, AbsAlertFilter):
                 self.cone_search_any(
                     ra,
                     dec,
-                    [
-                        cast(ConeSearchRequest, r.dict())
-                        for r in selection.any_of
-                    ],
+                    [cast(ConeSearchRequest, r.dict()) for r in selection.any_of],
                 )
             )
         return all(
@@ -101,10 +95,7 @@ class CatalogMatchFilter(CatalogMatchUnit, AbsAlertFilter):
 
     def process(self, alert: AmpelAlertProtocol) -> bool:
         # cut on the number of previous detections
-        if (
-            len([el for el in alert.datapoints if el["id"] > 0])
-            < self.min_ndet
-        ):
+        if len([el for el in alert.datapoints if el["id"] > 0]) < self.min_ndet:
             return False
 
         # now consider the last photopoint
@@ -115,9 +106,7 @@ class CatalogMatchFilter(CatalogMatchUnit, AbsAlertFilter):
             latest["isdiffpos"]
             and (latest["isdiffpos"] == "t" or latest["isdiffpos"] == "1")
         ):
-            self.logger.debug(
-                "rejected: 'isdiffpos' is %s", latest["isdiffpos"]
-            )
+            self.logger.debug("rejected: 'isdiffpos' is %s", latest["isdiffpos"])
             return False
 
         ra = latest["ra"]

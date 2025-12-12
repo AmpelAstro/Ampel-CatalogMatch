@@ -22,9 +22,7 @@ from ampel.ztf.t3.complement.TNSNames import TNSNames
 
 @pytest.fixture
 def catalogmatch_config():
-    with open(
-        Path(__file__).parent / "test-data" / "catalogmatch_config.yaml"
-    ) as f:
+    with open(Path(__file__).parent / "test-data" / "catalogmatch_config.yaml") as f:
         return yaml.safe_load(f)
 
 
@@ -48,9 +46,7 @@ def test_catalogmatch(
         sub_type=T2CatalogMatch,
     )
     result = unit.process(DataPoint({"id": 0, "body": {"ra": 0, "dec": 0}}))
-    base_config: dict[str, Any] = {
-        k: None for k in catalogmatch_config["catalogs"]
-    }
+    base_config: dict[str, Any] = {k: None for k in catalogmatch_config["catalogs"]}
     assert result == (
         base_config
         | {
@@ -73,9 +69,7 @@ def test_catalogmatch(
     )
 
 
-def test_tnsnames(
-    mock_context: AmpelContext, ampel_logger: AmpelLogger
-) -> None:
+def test_tnsnames(mock_context: AmpelContext, ampel_logger: AmpelLogger) -> None:
     unit: TNSNames = mock_context.loader.new_context_unit(
         UnitModel(unit="TNSNames"),
         logger=ampel_logger,

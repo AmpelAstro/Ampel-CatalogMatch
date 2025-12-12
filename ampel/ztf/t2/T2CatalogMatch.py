@@ -80,9 +80,7 @@ class T2CatalogMatch(CatalogMatchUnit, AbsPointT2Unit):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         self.all_catalogs = {k: v for k, v in self.catalogs.items() if v.all}
-        self.closest_catalogs = {
-            k: v for k, v in self.catalogs.items() if not v.all
-        }
+        self.closest_catalogs = {k: v for k, v in self.catalogs.items() if not v.all}
 
     def process(self, datapoint: DataPoint) -> UBson | UnitResult:
         """
@@ -157,9 +155,7 @@ class T2CatalogMatch(CatalogMatchUnit, AbsPointT2Unit):
                 ]
                 if match
                 else None
-                for catalog, match in zip(
-                    self.all_catalogs, all_matches, strict=False
-                )
+                for catalog, match in zip(self.all_catalogs, all_matches, strict=False)
             }
         )
 
