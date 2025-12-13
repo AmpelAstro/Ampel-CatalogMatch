@@ -26,20 +26,23 @@ class TNSNames(CatalogMatchContextUnit, AbsBufferComplement):
     search_radius: float = 3.0
     include_report: bool = False
 
+    #: T2 unit from which to obtain coordinates
+    coordinates_from: str = "T2LightCurveSummary"
+
     def complement(self, records: Iterable[AmpelBuffer], t3s: T3Store) -> None:  # noqa: ARG002
         for record in records:
-            # find the latest T2LightCurveSummary result
-            if (summary := self._get_t2_result(record, "T2LightCurveSummary")) is None:
+            # find the latest coordinates result
+            if (summary := self._get_t2_result(record, self.coordinates_from)) is None:
                 raise ValueError(
-                    f"No T2LightCurveSummary found for stock {record['id']!s}"
+                    f"No {self.coordinates_from} found for stock {record['id']!s}"
                 )
             if (ra := summary.get("ra")) is None:
                 raise ValueError(
-                    f"No T2LightCurveSummary contains no right ascension for stock {record['id']!s}"
+                    f"No {self.coordinates_from} contains no right ascension for stock {record['id']!s}"
                 )
             if (dec := summary.get("dec")) is None:
                 raise ValueError(
-                    f"No T2LightCurveSummary contains no declination for stock {record['id']!s}"
+                    f"No {self.coordinates_from} contains no declination for stock {record['id']!s}"
                 )
             if not (
                 matches := self.cone_search_all(
