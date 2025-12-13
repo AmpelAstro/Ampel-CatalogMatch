@@ -17,14 +17,14 @@ ampel-core = ">=0.10.6a12,<0.11"
 
 [[package]]
 name = "ampel-core"
-version = "0.10.6a19"
+version = "0.10.6a21"
 description = "Alice in Modular Provenance-Enabled Land"
 optional = false
 python-versions = "<4.0,>=3.10"
 groups = ["main", "dev"]
 files = [
-    {file = "ampel_core-0.10.6a19-py3-none-any.whl", hash = "sha256:7930b783b572c92de6bf38e7d3af0a5ab7ccccafab4a99742f0d9a8199d40202"},
-    {file = "ampel_core-0.10.6a19.tar.gz", hash = "sha256:6008fcc7e3b203cd6c2f71935fdbbe30b34490e811a91bef638baaef5d47da53"},
+    {file = "ampel_core-0.10.6a21-py3-none-any.whl", hash = "sha256:aca13160770e8e77dccd4bc8b142dce8da46ff84993766ffb145bd3e7172f4d7"},
+    {file = "ampel_core-0.10.6a21.tar.gz", hash = "sha256:9999d709f03afda2f99f7aa7bb7c100636146c6512f14241bc5c066ffb0f2369"},
 ]
 
 [package.dependencies]
@@ -70,18 +70,6 @@ groups = ["main", "dev"]
 files = [
     {file = "annotated_types-0.7.0-py3-none-any.whl", hash = "sha256:1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53"},
     {file = "annotated_types-0.7.0.tar.gz", hash = "sha256:aff07c09a53a08bc8cfccb9c85b05f1aa9a2a6f23728d790723543408344ce89"},
-]
-
-[[package]]
-name = "backoff"
-version = "2.2.1"
-description = "Function decoration for backoff and retry"
-optional = false
-python-versions = ">=3.7,<4.0"
-groups = ["main"]
-files = [
-    {file = "backoff-2.2.1-py3-none-any.whl", hash = "sha256:63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8"},
-    {file = "backoff-2.2.1.tar.gz", hash = "sha256:03f829f5bb1923180821643f8753b0502c3b682293992485b0eef2807afa5cba"},
 ]
 
 [[package]]
@@ -1087,6 +1075,22 @@ files = [
 testing = ["pylint", "pytest"]
 
 [[package]]
+name = "tenacity"
+version = "9.1.2"
+description = "Retry code until it succeeds"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "tenacity-9.1.2-py3-none-any.whl", hash = "sha256:f77bf36710d8b73a50b2dd155c97b870017ad21afe6ab300326b0371b3b05138"},
+    {file = "tenacity-9.1.2.tar.gz", hash = "sha256:1169d376c297e7de388d18b4481760d478b0e99a777cad3a9c86e556f4b697cb"},
+]
+
+[package.extras]
+doc = ["reno", "sphinx"]
+test = ["pytest", "tornado (>=4.5)", "typeguard"]
+
+[[package]]
 name = "types-requests"
 version = "2.32.4.20250913"
 description = "Typing stubs for requests"
@@ -1393,4 +1397,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11, <4"
-content-hash = "636bb7df435dcd7c7d3ccc2401af47f9bad7e3a89d018ca0cf3679398da095f8"
+content-hash = "6b770b525f9c4ac081f703ffe23da4830b1de1ed765f9ce636f052a565c62f2b"

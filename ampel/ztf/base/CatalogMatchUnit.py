@@ -6,7 +6,7 @@
 # Last Modified Date:  30.11.2022
 # Last Modified By:    Simeon Reusch <simeon.reusch@desy.de>
 
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from functools import cached_property
 from typing import (
     Any,
@@ -15,8 +15,8 @@ from typing import (
     overload,
 )
 
-import backoff
 import requests
+import tenacity
 from requests_toolbelt.sessions import (  # type: ignore[import-untyped]
     BaseUrlSession,
 )
@@ -76,6 +76,30 @@ class CatalogItem(TypedDict):
     dist_arcsec: float
 
 
+def retry_transient_errors(
+    statuses: Sequence[int] = (502, 503, 504, 429, 408),
+    max_tries: int = 5,
+    factor: float = 2.0,
+    max_delay: float = 60.0,
+    initial_delay: float = 1.0,
+) -> Callable[[tenacity.WrappedFn], tenacity.WrappedFn]:
+    transient_statuses = set(statuses)
+    return tenacity.retry(
+        wait=tenacity.wait_exponential_jitter(
+            initial=initial_delay,
+            max=max_delay,
+            exp_base=factor,
+        ),
+        stop=tenacity.stop_after_attempt(max_tries),
+        retry=tenacity.retry_if_exception_type(requests.ConnectionError)
+        | tenacity.retry_if_exception(
+            lambda e: isinstance(e, requests.HTTPError)
+            and e.response is not None
+            and e.response.status_code in transient_statuses
+        ),
+    )
+
+
 class CatalogMatchUnitBase:
     """
     A mixin providing catalog matching with catalogmatch-service
@@ -115,20 +139,7 @@ class CatalogMatchUnitBase:
         catalogs: Sequence[ConeSearchRequest],
     ) -> list[None | list[CatalogItem]]: ...
 
-    @backoff.on_exception(
-        backoff.expo,
-        requests.ConnectionError,
-        max_tries=5,
-        factor=10,
-    )
-    @backoff.on_exception(
-        backoff.expo,
-        requests.HTTPError,
-        giveup=lambda e: not isinstance(e, requests.HTTPError)
-        or e.response is None
-        or e.response.status_code not in {502, 503, 504, 429, 408},
-        max_time=60,
-    )
+    @retry_transient_errors()
     def _cone_search(
         self,
         method: Literal["any", "nearest", "all"],
