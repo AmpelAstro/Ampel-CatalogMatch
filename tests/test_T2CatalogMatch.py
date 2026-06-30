@@ -29,9 +29,9 @@ def catalogmatch_config():
 @pytest.fixture(scope="session")
 def _catalogmatch_service_reachable():
     try:
-        requests.head("https://ampel.zeuthen.desy.de/", timeout=0.5)
+        requests.head("https://ampel-ztf.zeuthen.desy.de/", timeout=0.5)
     except requests.exceptions.Timeout:
-        pytest.skip("https://ampel.zeuthen.desy.de/ is unreachable")
+        pytest.skip("https://ampel-ztf.zeuthen.desy.de/ is unreachable")
 
 
 @pytest.mark.usefixtures("_catalogmatch_service_reachable")

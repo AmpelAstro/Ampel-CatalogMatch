@@ -1,6 +1,6 @@
 [project]
 name = "ampel-catalogmatch"
-version = "0.10.0a3"
+version = "0.10.0a4"
 description = "Astronomical catalog matching for Ampel"
 requires-python = ">=3.11, <4"
 authors = [
@@ -40,8 +40,8 @@ dev = [
 [tool.poetry]
 packages = [
     {include = "ampel"},
-    {include = "ampel/conf/**/*.yml"},
 ]
+exclude = ["ampel/py.typed"]
 
 [project.urls]
 homepage = "https://ampelproject.github.io"

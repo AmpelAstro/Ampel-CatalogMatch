@@ -1,2 +1,2 @@
 resource:
-  url: https://ampel.zeuthen.desy.de/api/catalogmatch/
+  url: https://ampel-ztf.zeuthen.desy.de/api/catalogmatch/
