@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# File              : Ampel-contrib-HU/ampel/contrib/hu/t2/T2LSPhotoZTap.py
+# File              : Ampel-CatalogMatch/ampel/catalogmatch/t2/T2LSPhotoZTap.py
 # License           : BSD-3-Clause
 # Author            : jnordin
 # Date              : 20.04.2021
@@ -15,7 +14,6 @@ from math import pi
 from typing import Any
 from urllib.parse import urlparse, urlunparse
 
-import backoff
 import numpy as np
 import requests
 from astropy.coordinates import angular_separation
@@ -29,6 +27,7 @@ from ampel.enum.DocumentCode import DocumentCode
 from ampel.secret.NamedSecret import NamedSecret
 from ampel.struct.UnitResult import UnitResult
 from ampel.types import UBson
+from ampel.ztf.base.CatalogMatchUnit import retry_transient_errors
 
 
 def convert(inp, outfmt="pandas", verbose=False, **kwargs):
@@ -90,14 +89,14 @@ def convert(inp, outfmt="pandas", verbose=False, **kwargs):
     list = header.split(",")
     col_dict: dict[str, int] = {}
     new_s = ""
-    for l in list:
-        if l in col_dict:
-            n = col_dict[l]
-            col_dict[l] = n + 1
-            new_s += l + "_" + str(n) + ","
+    for item in list:
+        if item in col_dict:
+            n = col_dict[item]
+            col_dict[item] = n + 1
+            new_s += item + "_" + str(n) + ","
         else:
-            new_s += l + ","
-            col_dict[l] = 1
+            new_s += item + ","
+            col_dict[item] = 1
     inp = new_s[:-1] + "\n" + inp
 
     # map outfmt container types to a tuple:
@@ -193,19 +192,7 @@ class T2LSPhotoZTap(AbsPointT2Unit):
         session.headers.update({"X-DL-AuthToken": response.text})
         return session
 
-    @backoff.on_exception(
-        backoff.expo,
-        requests.ConnectionError,
-        max_tries=5,
-        factor=10,
-    )
-    @backoff.on_exception(
-        backoff.expo,
-        requests.HTTPError,
-        giveup=lambda e: isinstance(e, requests.HTTPError)
-        and e.response.status_code not in {503, 429},
-        max_time=60,
-    )
+    @retry_transient_errors()
     def _astrolab_query(self, ra: float, dec: float) -> Sequence[dict[str, Any]]:
         self.logger.debug(f"Querying {ra} {dec}")
 
