@@ -11,7 +11,7 @@ from collections.abc import Sequence
 from functools import cached_property, partial
 from io import BytesIO
 from math import pi
-from typing import Any
+from typing import Any, Literal
 from urllib.parse import urlparse, urlunparse
 
 import numpy as np
@@ -30,7 +30,14 @@ from ampel.types import UBson
 from ampel.ztf.base.CatalogMatchUnit import retry_transient_errors
 
 
-def convert(inp, outfmt="pandas", verbose=False, **kwargs):
+def convert(
+    inp: str,
+    outfmt: Literal[
+        "string", "array", "structarray", "pandas", "table", "votable"
+    ] = "pandas",
+    verbose=False,
+    **kwargs,
+):
     """
     *** Taken from datalab dl/helpers/util/convert ***
     (to avoid pulling in _all_ the dependencies)
