@@ -1,0 +1,30 @@
+# serializer version: 1
+# name: test_match
+  dict({
+    'T2LSPhotoZTap': dict({
+      'dec': 1.9977514628901791,
+      'dered_mag_g': 24.02235,
+      'dered_mag_r': 23.497692,
+      'dered_mag_w1': 22.62755,
+      'dered_mag_w2': nan,
+      'dered_mag_w3': 18.921059,
+      'dered_mag_w4': nan,
+      'dered_mag_z': 23.029818,
+      'dist2transient': 8.107602969932099,
+      'ra': 150.0001269198027,
+      'snr_g': 6.424314,
+      'snr_r': 6.621605,
+      'snr_w1': 1.55841,
+      'snr_w2': -0.445872,
+      'snr_w3': 0.770882,
+      'snr_w4': -0.524093,
+      'snr_z': 3.833218,
+      'z_phot_l68': 0.534578,
+      'z_phot_mean': 0.848754,
+      'z_phot_median': 0.817497,
+      'z_phot_std': 0.344019,
+      'z_phot_u68': 1.126618,
+      'z_spec': 0.4237,
+    }),
+  })
+# ---

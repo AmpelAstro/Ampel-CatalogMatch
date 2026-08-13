@@ -35,6 +35,7 @@ dev = [
     "pytest-ampel-core (>=0.10.0a4,<0.11)",
     "mypy (>=1.13,<2.0)",
     "types-requests (>=2.32.4.20250913,<3.0.0.0)",
+    "syrupy (>=5.5.3,<6.0.0)",
 ]
 
 [tool.poetry]
