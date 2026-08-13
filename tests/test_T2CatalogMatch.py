@@ -67,6 +67,7 @@ def test_catalogmatch(
     )
 
 
+@pytest.mark.usefixtures("_catalogmatch_service_reachable")
 def test_tnsnames(mock_context: AmpelContext, ampel_logger: AmpelLogger) -> None:
     unit: TNSNames = mock_context.loader.new_context_unit(
         UnitModel(unit="TNSNames"),
