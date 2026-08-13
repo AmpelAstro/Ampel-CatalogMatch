@@ -7,15 +7,14 @@
 # Last Modified By  : jnordin
 
 import csv
+import math
 from collections.abc import Sequence
 from functools import cached_property
 from io import StringIO
-from math import pi
 from typing import Any
 from urllib.parse import urlparse, urlunparse
 
 import requests
-from astropy.coordinates import angular_separation
 
 from ampel.abstract.AbsPointT2Unit import AbsPointT2Unit
 from ampel.content.DataPoint import DataPoint
@@ -24,6 +23,8 @@ from ampel.secret.NamedSecret import NamedSecret
 from ampel.struct.UnitResult import UnitResult
 from ampel.types import UBson
 from ampel.ztf.base.CatalogMatchUnit import retry_transient_errors
+
+from ..util.coordinates import angular_separation
 
 
 def convert(datum: str) -> bool | int | float | str:
@@ -143,7 +144,7 @@ class T2LSPhotoZTap(AbsPointT2Unit):
         """
         Iterate through catalog entries (dict) and add separation to target.
         """
-        c = pi / 180
+        c = math.pi / 180
 
         for el in match_dict:
             if "dec" in el and "ra" in el:
