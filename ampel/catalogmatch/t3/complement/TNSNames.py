@@ -11,10 +11,10 @@ from collections.abc import Iterable
 from typing import Any
 
 from ampel.abstract.AbsBufferComplement import AbsBufferComplement
+from ampel.catalogmatch.base.CatalogMatchUnit import CatalogMatchContextUnit
 from ampel.enum.DocumentCode import DocumentCode
 from ampel.struct.AmpelBuffer import AmpelBuffer
 from ampel.struct.T3Store import T3Store
-from ampel.ztf.base.CatalogMatchUnit import CatalogMatchContextUnit
 
 
 class TNSNames(CatalogMatchContextUnit, AbsBufferComplement):
