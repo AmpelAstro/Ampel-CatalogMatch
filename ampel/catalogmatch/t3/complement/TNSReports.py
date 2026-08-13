@@ -6,7 +6,7 @@
 # Date:                10.03.2021
 # Last Modified By:    Jakob van Santen <jakob.van.santen@desy.de>
 
-from ampel.ztf.t3.complement.TNSNames import TNSNames
+from .TNSNames import TNSNames
 
 
 class TNSReports(TNSNames):

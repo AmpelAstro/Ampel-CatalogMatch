@@ -22,8 +22,8 @@ from ampel.enum.DocumentCode import DocumentCode
 from ampel.secret.NamedSecret import NamedSecret
 from ampel.struct.UnitResult import UnitResult
 from ampel.types import UBson
-from ampel.ztf.base.CatalogMatchUnit import retry_transient_errors
 
+from ..base.CatalogMatchUnit import retry_transient_errors
 from ..util.coordinates import angular_separation
 
 

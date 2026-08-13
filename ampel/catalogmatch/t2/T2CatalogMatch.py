@@ -16,7 +16,8 @@ from ampel.enum.DocumentCode import DocumentCode
 from ampel.model.DPSelection import DPSelection
 from ampel.struct.UnitResult import UnitResult
 from ampel.types import UBson
-from ampel.ztf.base.CatalogMatchUnit import CatalogMatchUnit
+
+from ..base.CatalogMatchUnit import CatalogMatchUnit
 
 
 class CatalogModel(AmpelBaseModel):
