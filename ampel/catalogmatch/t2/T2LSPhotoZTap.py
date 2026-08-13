@@ -6,20 +6,16 @@
 # Last Modified Date: 21.04.2021
 # Last Modified By  : jnordin
 
-from collections import OrderedDict
+import csv
 from collections.abc import Sequence
-from functools import cached_property, partial
-from io import BytesIO
+from functools import cached_property
+from io import StringIO
 from math import pi
-from typing import Any, Literal
+from typing import Any
 from urllib.parse import urlparse, urlunparse
 
-import numpy as np
 import requests
 from astropy.coordinates import angular_separation
-from astropy.io.votable import parse_single_table
-from astropy.table import Table
-from pandas import read_csv
 
 from ampel.abstract.AbsPointT2Unit import AbsPointT2Unit
 from ampel.content.DataPoint import DataPoint
@@ -30,129 +26,47 @@ from ampel.types import UBson
 from ampel.ztf.base.CatalogMatchUnit import retry_transient_errors
 
 
-def convert(
-    inp: str,
-    outfmt: Literal[
-        "string", "array", "structarray", "pandas", "table", "votable"
-    ] = "pandas",
-    verbose=False,
-    **kwargs,
-):
+def convert(datum: str) -> bool | int | float | str:
     """
-    *** Taken from datalab dl/helpers/util/convert ***
-    (to avoid pulling in _all_ the dependencies)
-
-    Convert input `inp` to a data structure defined by `outfmt`.
-
-    Parameters
-    ----------
-    inp : str
-        String representation of the result of a query. Usually this
-        is a CSV-formatted string, but can also be, e.g. an
-        XML-formatted votable (as string)
-
-    outfmt : str
-        The desired data structure for converting `inp` to. Default:
-        'pandas', which returns a Pandas dataframe. Other available
-        conversions are:
-
-          string - no conversion
-          array - Numpy array
-          structarray - Numpy structured array (also called record array)
-          table - Astropy Table
-          votable - Astropy VOtable
-
-        For outfmt='votable', the input string must be an
-        XML-formatted string. For all other values, as CSV-formatted
-        string.
-
-    verbose : bool
-        If True, print status message after conversion. Default: False
-
-    kwargs : optional params
-        Will be passed as **kwargs to the converter method.
-
-
-    Example
-    -------
-    Convert a CSV-formatted string to a Pandas dataframe
-
-    .. code-block:: python
-
-       arr = convert(inp,'array')
-       arr.shape  # arr is a Numpy array
-
-       df = convert(inp,outfmt='pandas')
-       df.head()  # df is as Pandas dataframe, with all its methods
-
-       df = convert(inp,'pandas',na_values='Infinity') # na_values is a kwarg; adds 'Infinity' to list of values converter to np.inf
-
+    Convert a string to a bool, int, float or str.
     """
+    if datum.lower() in ("true", "false"):
+        return datum.lower() == "true"
+    try:
+        return int(datum)
+    except ValueError:
+        pass
+    try:
+        return float(datum)
+    except ValueError:
+        pass
+    return datum
+
+
+# adapted from datalab dl/helpers/util/convert
+def parse_csv(inp: str) -> Sequence[dict[str, bool | int | float | str]]:
     # When there are duplicate column names in the table, it would not work when converting to Astropy Table and Votable, so we
     # have to add '_n' as an identifier to the duplicate column names.
-    index = inp.find("\n")
-    header = inp[0:index]
-    inp = inp[index + 1 :]
-    list = header.split(",")
+    lines = StringIO(inp)
+    try:
+        header = next(lines)
+    except StopIteration:
+        return []
     col_dict: dict[str, int] = {}
-    new_s = ""
-    for item in list:
-        if item in col_dict:
-            n = col_dict[item]
-            col_dict[item] = n + 1
-            new_s += item + "_" + str(n) + ","
+    for field in header.strip().split(","):
+        if field in col_dict:
+            col_dict[field] += 1
         else:
-            new_s += item + ","
-            col_dict[item] = 1
-    inp = new_s[:-1] + "\n" + inp
+            col_dict[field] = 1
 
-    # map outfmt container types to a tuple:
-    # (:func:`queryClient.query()` fmt-value, descriptive title,
-    # processing function for the result string)
-    mapping = OrderedDict(
-        [
-            (
-                "string",
-                ("csv", "CSV formatted table as a string", lambda x: x.getvalue()),
-            ),
-            (
-                "array",
-                (
-                    "csv",
-                    "Numpy array",
-                    partial(np.loadtxt, unpack=False, skiprows=1, delimiter=","),
-                ),
-            ),
-            (
-                "structarray",
-                (
-                    "csv",
-                    "Numpy structured / record array",
-                    partial(np.genfromtxt, dtype=float, delimiter=",", names=True),
-                ),
-            ),
-            ("pandas", ("csv", "Pandas dataframe", read_csv)),
-            ("table", ("csv", "Astropy Table", partial(Table.read, format="csv"))),
-            ("votable", ("votable", "Astropy VOtable", parse_single_table)),
-        ]
+    reader = csv.DictReader(
+        lines,
+        fieldnames=[
+            field if count == 1 else f"{field}_{count}"
+            for field, count in col_dict.items()
+        ],
     )
-
-    if isinstance(inp, bytes):
-        b = BytesIO(inp)
-    elif isinstance(inp, str):
-        b = BytesIO(inp.encode())
-    else:
-        raise TypeError("Input must be of bytes or str type.")
-
-    output = mapping[outfmt][2](b, **kwargs)
-
-    if isinstance(output, bytes):
-        output = output.decode()
-
-    if verbose:
-        print(f"Returning {mapping[outfmt][1]}")  # noqa: T201
-
-    return output
+    return [{k: convert(v) for k, v in row.items()} for row in reader]
 
 
 class T2LSPhotoZTap(AbsPointT2Unit):
@@ -217,7 +131,7 @@ class T2LSPhotoZTap(AbsPointT2Unit):
             return []
 
         # First convert to string and then to dict
-        ret_dict = convert(str(r.content.decode()), "pandas").to_dict(orient="records")
+        ret_dict = parse_csv(str(r.content.decode()))
 
         self.logger.debug(f"Got {len(ret_dict)} matches")
 
